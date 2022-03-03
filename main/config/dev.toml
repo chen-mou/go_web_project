@@ -1,0 +1,8 @@
+[server]
+    Address = ":15030"
+    ServerRoot = "/public"
+    IndexFiles = ["index.html"]
+    logPath = "gflogs"
+[logger]
+    path = "logs"
+    level = "all"
