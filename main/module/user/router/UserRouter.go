@@ -1,11 +1,12 @@
 package router
 
 import (
-	"github.com/gogf/gf/net/ghttp"
+	"github.com/gogf/gf/frame/g"
 	"project/main/module/user/controller"
 	"project/main/tool"
 )
 
-func Register(server *ghttp.Server) {
-	tool.BindObjectReflect("/user", controller.UserController, server)
+func init() {
+	s := g.Server()
+	tool.BindObjectReflect("/user", controller.UserController, s)
 }
