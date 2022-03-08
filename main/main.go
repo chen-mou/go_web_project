@@ -3,8 +3,7 @@ package main
 import (
 	"flag"
 	"github.com/gogf/gf/frame/g"
-	_ "project/main/module/shop/router"
-	_ "project/main/module/user/router"
+	_ "project/main/module/user/controller"
 )
 
 var configMap = map[string]string{
@@ -18,6 +17,6 @@ func main() {
 	flag.StringVar(&env, "env", "", "dev")
 	flag.Parse()
 	g.Cfg().SetFileName(configMap[env])
-	s := g.Server()
+	s := g.Server("user")
 	s.Run()
 }

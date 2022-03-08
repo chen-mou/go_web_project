@@ -1,20 +1,15 @@
 package controller
 
 import (
+	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 )
 
-type userController struct {
-	Login    func(request *ghttp.Request) `method:"POST" address:"/login"`
-	Register func(request *ghttp.Request) `method:"GET" address:"/register"`
-}
-
-var UserController *userController
-
 func init() {
-	UserController = new(userController)
-	UserController.Login = login
-	UserController.Register = register
+	s := g.Server("user").Group("/user")
+	s.POST("/login", login)
+	s.POST("/register", register)
+
 }
 
 func login(r *ghttp.Request) {
