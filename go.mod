@@ -2,7 +2,11 @@ module project
 
 go 1.18
 
-require github.com/gogf/gf v1.16.6
+require (
+	github.com/gogf/gf v1.16.6
+	gorm.io/driver/sqlite v1.3.1
+	gorm.io/gorm v1.23.2
+)
 
 require (
 	github.com/BurntSushi/toml v0.3.1 // indirect
@@ -13,9 +17,12 @@ require (
 	github.com/gomodule/redigo v1.8.5 // indirect
 	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/grokify/html-strip-tags-go v0.0.0-20190921062105-daaa06bf1aaf // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/jinzhu/now v1.1.4 // indirect
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/mattn/go-runewidth v0.0.9 // indirect
+	github.com/mattn/go-sqlite3 v1.14.9 // indirect
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
 	go.opentelemetry.io/otel v1.0.0-RC2 // indirect
 	go.opentelemetry.io/otel/trace v1.0.0-RC2 // indirect
