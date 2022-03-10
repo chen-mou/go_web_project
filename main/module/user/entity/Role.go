@@ -12,15 +12,16 @@ type Auth struct {
 }
 
 type Role struct {
-	Id    int
-	Name  string
-	Ctime time.Timestamp
-	Mtime time.Timestamp
+	Id     int
+	Name   string
+	Status string
+	Ctime  time.Timestamp
+	Mtime  time.Timestamp
 }
 
 type UserRole struct {
 	Id     int
-	UserId int
+	UserId string
 	RoleId int
 	Ctime  time.Timestamp
 	Mtime  time.Timestamp
