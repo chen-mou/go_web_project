@@ -4,8 +4,10 @@ go 1.18
 
 require (
 	github.com/gogf/gf v1.16.6
-	gorm.io/driver/sqlite v1.3.1
-	gorm.io/gorm v1.23.2
+	golang.org/x/sys v0.0.0-20210423082822-04245dca01da
+	gorm.io/driver/mysql v1.0.3
+	gorm.io/gorm v1.20.11
+	gorm.io/plugin/dbresolver v1.1.0
 )
 
 require (
@@ -22,12 +24,10 @@ require (
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/mattn/go-runewidth v0.0.9 // indirect
-	github.com/mattn/go-sqlite3 v1.14.9 // indirect
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
 	go.opentelemetry.io/otel v1.0.0-RC2 // indirect
 	go.opentelemetry.io/otel/trace v1.0.0-RC2 // indirect
 	golang.org/x/net v0.0.0-20210520170846-37e1c6afe023 // indirect
-	golang.org/x/sys v0.0.0-20210423082822-04245dca01da // indirect
 	golang.org/x/text v0.3.6 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )

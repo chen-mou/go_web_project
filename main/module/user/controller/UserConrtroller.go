@@ -5,7 +5,7 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-func init() {
+func Register() {
 	s := g.Server("user").Group("/user")
 	s.POST("/login", login)
 	s.POST("/register", register)
