@@ -2,16 +2,15 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"github.com/gogf/gf/frame/g"
 	userController "project/main/module/user/controller"
 	_ "project/main/tool/dbTool"
 )
 
 var configMap = map[string]string{
-	"dev":  "config/dev.toml",
-	"dep":  "config/dep.toml",
-	"test": "config/test.toml",
+	"dev":  "config/dev.yml",
+	"dep":  "config/dep.yml",
+	"test": "config/test.yml",
 }
 
 func register() {
@@ -24,7 +23,6 @@ func main() {
 	flag.Parse()
 	g.Config().SetFileName(configMap[env])
 	s := g.Server("user")
-	fmt.Println(g.Config().GetFilePath())
 	register()
 	s.Run()
 }

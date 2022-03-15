@@ -9,6 +9,8 @@ type User struct {
 	Password string
 	Status   string
 	Salt     string
+	Data     UserData   `gorm:"foreignKey:Id"`
+	Roles    []UserRole `gorm:"foreignKey:UserId"`
 	Ctime    time.Timestamp
 	Mtime    time.Timestamp
 }

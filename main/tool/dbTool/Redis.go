@@ -1,5 +1,92 @@
 package dbTool
 
+import (
+	"context"
+	"github.com/go-redis/redis/v8"
+	"github.com/gogf/gf/os/glog"
+	"time"
+)
+
+var RedisClient *redis.ClusterClient
+
+func do(handler func(), ctx context.Context) {
+	select {
+	case <-ctx.Done():
+		handler()
+	}
+}
+
 func init() {
+	RedisClient = redis.NewClusterClient(&redis.ClusterOptions{
+		Addrs: []string{
+			"150.158.169.43:6371",
+			"150.158.169.43:6372",
+			"150.158.169.43:6373",
+		},
+		Password: "1007324849redis...",
+	})
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	glog.Info(RedisClient.Ping(ctx).String())
+}
+
+// GetLock 获取锁
+// 返回 true 或者 false;
+func GetLock(key, value string, expireAt time.Duration) bool {
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	var cmd bool
+	var ok error
+	cmd, ok = RedisClient.SetNX(ctx, key, value, expireAt).Result()
+	if ok != nil {
+		panic(any(ok))
+	}
+	return cmd
+}
+
+// GetLoopLock 自旋锁直到获取锁或者超时否则一直阻塞
+// deadLine 取-1为永不超时
+func GetLoopLock(key, value string, expireAt time.Duration, deadLine int64) bool {
+	ctx, cancelFunc1 := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancelFunc1()
+	var cmd bool
+	var ok error
+	var timeout = false
+	if deadLine != -1 {
+		ctx1, cancelFunc := context.WithTimeout(context.Background(),
+			time.Duration(deadLine)*time.Millisecond)
+		defer cancelFunc()
+		go do(func() {
+			timeout = !timeout
+		}, ctx1)
+	}
+	for !cmd && !timeout {
+		cmd, ok = RedisClient.SetNX(ctx, key, value, expireAt).Result()
+		if ok != nil {
+			panic(any(ok))
+		}
+		time.Sleep(100 * time.Millisecond)
+	}
+	return cmd
+}
+
+func Unlock(key, value string) string {
+	ctx, f := context.WithTimeout(context.Background(), 10*time.Second)
+	defer f()
+	script := redis.NewScript(`
+	local key = KEYS[1]
+	local value = ARGV[1]
+	local back = redis.call("GET", key)
+	if not value then
+		return "unknown"
+	end
+	if value == back then
+		redis.call("DEL", key)
+		return "ok"
+	end
+	return "wait"`)
+	v, err := script.Run(ctx, RedisClient, []string{key}, []string{value}).Result()
+	if err != nil {
+		panic(any(err))
+	}
+	return v.(string)
 
 }
