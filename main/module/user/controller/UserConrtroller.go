@@ -43,3 +43,7 @@ func register(r *ghttp.Request) {
 	}
 	r.Response.WriteJsonExit(res.Success("注册成功", &data))
 }
+
+func getUserInfo(r *ghttp.Request) {
+
+}

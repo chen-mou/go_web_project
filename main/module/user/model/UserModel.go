@@ -10,14 +10,18 @@ import (
 	local "time"
 )
 
-func GetByName(name string) (*entity.User, error) {
+func GetBaseByName(name string) (*entity.User, error) {
 	user := entity.User{}
-	err := dbTool.Mysql.Where("name = ?", name).First(&user).Error
+	err := dbTool.Mysql.Where("name = ? and status = 'NORMAL'", name).First(&user).Error
 	if err != nil {
 		return nil, err
 	}
 	return &user, nil
 }
+
+//func GetBaseByUUID(UUID string) (*entity.User, error) {
+//
+//}
 
 func Create(name, password string) (*entity.User, error) {
 	user := entity.User{}

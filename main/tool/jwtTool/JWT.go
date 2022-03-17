@@ -1,6 +1,7 @@
 package jwtTool
 
 import (
+	"errors"
 	"github.com/dgrijalva/jwt-go"
 	"project/main/tool/encryption"
 	"time"
@@ -21,4 +22,20 @@ func GetToken(UUID string, value *map[string]interface{}) string {
 		panic(any(err))
 	}
 	return token
+}
+
+func ParseToken(token string) (*Claims, error) {
+	tokenClaim, err := jwt.ParseWithClaims(token, &Claims{}, func(token *jwt.Token) (interface{}, error) {
+		return key, nil
+	})
+	if err != nil {
+		return nil, errors.New("token 非法")
+	}
+	if tokenClaim != nil {
+		claim, ok := tokenClaim.Claims.(*Claims)
+		if ok && tokenClaim.Valid {
+			return claim, nil
+		}
+	}
+	return nil, errors.New("token失效或过期")
 }

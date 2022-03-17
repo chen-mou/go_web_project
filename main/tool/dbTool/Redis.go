@@ -2,12 +2,35 @@ package dbTool
 
 import (
 	"context"
+	"encoding/json"
 	"github.com/go-redis/redis/v8"
 	"github.com/gogf/gf/os/glog"
+	"golang.org/x/net/http2"
+	"golang.org/x/sys/windows"
+	"os"
+	"strconv"
 	"time"
 )
 
 var RedisClient *redis.ClusterClient
+
+var redisPath = []string{
+	"150.158.169.43:6371",
+	"150.158.169.43:6372",
+	"150.158.169.43:6373",
+}
+
+var localRedisPath = []string{
+	"127.0.0.1:6380",
+	"127.0.0.1:6381",
+	"127.0.0.1:6382",
+}
+
+var myRedisPath = []string{
+	"120.24.214.131:6381",
+	"120.24.214.131:6382",
+	"120.24.214.131:6383",
+}
 
 func do(handler func(), ctx context.Context) {
 	select {
@@ -18,15 +41,21 @@ func do(handler func(), ctx context.Context) {
 
 func init() {
 	RedisClient = redis.NewClusterClient(&redis.ClusterOptions{
-		Addrs: []string{
-			"150.158.169.43:6371",
-			"150.158.169.43:6372",
-			"150.158.169.43:6373",
-		},
+		Addrs:    redisPath,
 		Password: "1007324849redis...",
 	})
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
-	glog.Info(RedisClient.Ping(ctx).String())
+	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
+	ok := RedisClient.Ping(ctx)
+	if ok.Val() == "PONG" {
+		glog.Info("Redis init success")
+	} else {
+		panic(any("Redis init error err is : " + ok.Err().Error()))
+	}
+	//ctx1, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	//glog.Info(redis.NewClient(&redis.Options{
+	//	Addr:     "150.158.169.43:6371",
+	//	Password: "1007324849redis...",
+	//}).Ping(ctx1).String())
 }
 
 // GetLock 获取锁
@@ -89,4 +118,31 @@ func Unlock(key, value string) string {
 	}
 	return v.(string)
 
+}
+
+func Get(key string, value interface{}) {
+	ctx, _ := context.WithTimeout(context.Background(), 1*time.Second)
+	str, err := RedisClient.Get(ctx, key).Result()
+	if err != nil {
+		panic(any(err))
+	}
+	json.Unmarshal([]byte(str), value)
+}
+
+func Set(key string, value interface{}, expireAt time.Duration) {
+	str, err := json.Marshal(value)
+	ctx, _ := context.WithTimeout(context.Background(), 1*time.Second)
+	if err != nil {
+		panic(any(err))
+	}
+	RedisClient.Set(ctx, key, str, expireAt)
+}
+
+func GetThreadID() string {
+	goroutineID := http2.CurGoroutineID()
+	pid := os.Getpid()
+	threadId := windows.GetCurrentThreadId()
+	return strconv.Itoa(pid) + ":" +
+		strconv.FormatUint(uint64(threadId), 10) + ":" +
+		strconv.FormatUint(goroutineID, 10)
 }

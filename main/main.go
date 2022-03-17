@@ -4,6 +4,7 @@ import (
 	"flag"
 	"github.com/gogf/gf/frame/g"
 	userController "project/main/module/user/controller"
+	"project/main/module/user/middware"
 	_ "project/main/tool/dbTool"
 )
 
@@ -23,6 +24,8 @@ func main() {
 	flag.Parse()
 	g.Config().SetFileName(configMap[env])
 	s := g.Server("user")
+	s.Use(middware.CORS)
+	s.Use(middware.JWT)
 	register()
 	s.Run()
 }

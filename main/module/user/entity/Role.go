@@ -6,7 +6,7 @@ type Auth struct {
 	Id    int
 	Name  string
 	Scope string
-	Auth  string
+	Auth  int32
 	Ctime time.Timestamp
 	Mtime time.Timestamp
 }
@@ -24,6 +24,7 @@ type UserRole struct {
 	Id     int
 	UserId string
 	RoleId int
+	Expire int32
 	Role   Role `gorm:"foreignKey:Id"`
 	Ctime  time.Timestamp
 	Mtime  time.Timestamp
@@ -48,4 +49,8 @@ func (Auth) TableName() string {
 
 func (UserRole) TableName() string {
 	return "user_role"
+}
+
+func (RoleAuth) TableName() string {
+	return "role_auth"
 }

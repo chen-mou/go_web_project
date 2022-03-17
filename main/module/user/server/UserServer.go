@@ -1,18 +1,16 @@
 package server
 
 import (
-	"os"
 	"project/main/module/user/entity"
 	"project/main/module/user/model"
 	"project/main/tool/dbTool"
 	"project/main/tool/encryption"
 	"project/main/tool/jwtTool"
-	"strconv"
 	"time"
 )
 
 func Login(name, password string) (string, string) {
-	user, _ := model.GetByName(name)
+	user, _ := model.GetBaseByName(name)
 	if user == nil {
 		return "", "用户名不存在"
 	}
@@ -24,15 +22,14 @@ func Login(name, password string) (string, string) {
 
 func Register(name, password string) (*entity.User, string) {
 	key := "USER_REGISTER_LOCK_" + name
-	ok := dbTool.GetLoopLock(key,
-		strconv.Itoa(os.Getpid()),
+	value := dbTool.GetThreadID()
+	ok := dbTool.GetLoopLock(key, value,
 		time.Second*5, 3000)
-	defer dbTool.Unlock(key,
-		strconv.Itoa(os.Getpid()))
 	if !ok {
 		return nil, "服务器繁忙"
 	}
-	_, err := model.GetByName(name)
+	defer dbTool.Unlock(key, value)
+	_, err := model.GetBaseByName(name)
 	if err == nil {
 		return nil, "用户名已存在"
 	}
