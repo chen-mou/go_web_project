@@ -3,8 +3,8 @@ package dbTool
 import (
 	"context"
 	"encoding/json"
+	"github.com/chen-mou/gf/os/glog"
 	"github.com/go-redis/redis/v8"
-	"github.com/gogf/gf/os/glog"
 	"golang.org/x/net/http2"
 	"golang.org/x/sys/windows"
 	"os"
@@ -41,8 +41,8 @@ func do(handler func(), ctx context.Context) {
 
 func init() {
 	RedisClient = redis.NewClusterClient(&redis.ClusterOptions{
-		Addrs: localRedisPath,
-		//Password: "1007324849redis...",
+		Addrs:    redisPath,
+		Password: "1007324849redis...",
 	})
 	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
 	ok := RedisClient.Ping(ctx)

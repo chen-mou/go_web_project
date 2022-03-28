@@ -64,6 +64,6 @@ func Create(users []entity.User, roleId int) ([]entity.User, error) {
 	return users, err
 }
 
-func CreateManager(users []entity.User) ([]entity.User, error) {
-
-}
+//func CreateManager(users []entity.User) ([]entity.User, error) {
+//
+//}

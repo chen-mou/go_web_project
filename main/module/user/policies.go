@@ -1,14 +1,16 @@
 package user
 
 import (
+	"errors"
+	"gorm.io/gorm"
 	"project/main/module/user/entity"
 	"project/main/tool/dbTool"
 	"reflect"
 )
 
-var Policies map[string]*entity.Role
+var Policies = make(map[string]*entity.Role)
 
-var cache map[string]*entity.Role
+var cache = make(map[string]*entity.Role)
 
 func Register(path, name string) {
 	role := entity.Role{}
@@ -16,9 +18,12 @@ func Register(path, name string) {
 		Policies[path] = cache[name]
 		return
 	}
-	err := dbTool.Mysql.Where("where name = ? and status = ?", name, "NORMAL").Find(&role).Error
+	err := dbTool.Mysql.Where(" name = ? and status = ?", name, "NORMAL").Find(&role).Error
 	if err != nil {
-		panic(any(err))
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			panic(any("没有找到目标权限：" + name))
+		}
+		panic(any(err.Error()))
 	}
 	Policies[path] = &role
 	cache[name] = Policies[path]
@@ -30,7 +35,7 @@ func RegisterByStruct(obj any) {
 		field := t.Field(i)
 		if field.Type.Kind().String() == "func" {
 			path := field.Tag.Get("path")
-			role := field.Tag.Get("roleName")
+			role := field.Tag.Get("role")
 			Register(path, role)
 		}
 	}

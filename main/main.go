@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"github.com/gogf/gf/frame/g"
+	"github.com/chen-mou/gf/frame/g"
 	userController "project/main/module/user/controller"
 	"project/main/module/user/middware"
 	_ "project/main/tool/dbTool"

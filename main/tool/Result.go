@@ -1,6 +1,6 @@
 package tool
 
-import "github.com/gogf/gf/frame/g"
+import "github.com/chen-mou/gf/frame/g"
 
 type Result g.Map
 

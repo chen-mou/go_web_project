@@ -1,7 +1,7 @@
 package middware
 
 import (
-	"github.com/gogf/gf/net/ghttp"
+	"github.com/chen-mou/gf/net/ghttp"
 	"project/main/module/user"
 	"project/main/module/user/entity"
 	"project/main/module/user/model"
