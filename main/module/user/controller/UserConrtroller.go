@@ -3,15 +3,20 @@ package controller
 import (
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
+	"project/main/module/user"
 	"project/main/module/user/server"
 	"project/main/tool"
 	"project/main/tool/jwtTool"
 )
 
 func Register() {
+	roleController := RoleController{}
+	user.RegisterByStruct(roleController)
 	s := g.Server("user").Group("/user")
 	s.POST("/login", login)
 	s.POST("/register", register)
+	s = g.Server("user").Group("/role")
+	s.POST("/create", createDefine)
 
 }
 

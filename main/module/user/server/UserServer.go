@@ -33,11 +33,13 @@ func Register(name, password string) (*entity.User, string) {
 	if err == nil {
 		return nil, "用户名已存在"
 	}
-	user, err1 := model.Create(name, password)
+	user, err1 := model.Create([]entity.User{
+		{Name: name, Password: password},
+	}, 1)
 	if err1 != nil {
 		panic(any(err1))
 	}
-	user.Salt = ""
-	user.Id = -1
-	return user, ""
+	user[0].Salt = ""
+	user[0].Id = -1
+	return &user[0], ""
 }

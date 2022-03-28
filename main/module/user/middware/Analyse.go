@@ -3,6 +3,7 @@ package middware
 import (
 	"github.com/gogf/gf/net/ghttp"
 	"project/main/module/user"
+	"project/main/module/user/entity"
 	"project/main/module/user/model"
 	"project/main/module/user/server"
 	"project/main/tool"
@@ -10,6 +11,11 @@ import (
 )
 
 func JWT(r *ghttp.Request) {
+	targetRole := user.Policies[r.Request.RequestURI]
+	if targetRole == nil {
+		r.Middleware.Next()
+		return
+	}
 	token := r.Header.Get("X-Auth-Token")
 	claim, err := jwtTool.ParseToken(token)
 	if err != nil {
@@ -23,17 +29,16 @@ func JWT(r *ghttp.Request) {
 	}
 	for i := range userRoles {
 		userRole := model.Mix(userRoles[i].Role)
-		targetRole := user.Policies[r.Request.RequestURI]
-		if targetRole == nil {
+		if model.Verify(*userRole, *targetRole) {
+			r.Attribute["CurrentUser"] = entity.User{
+				Roles: userRoles,
+				UUID:  claim.UUID,
+			}
 			r.Middleware.Next()
 			return
 		}
-		if !model.Verify(*userRole, *targetRole) {
-			r.Response.WriteJsonExit(tool.Result{}.Fail(403, "没有足够的权限"))
-			return
-		}
 	}
-	r.Middleware.Next()
+	r.Response.WriteJsonExit(tool.Result{}.Fail(403, "没有足够的权限"))
 
 }
 
