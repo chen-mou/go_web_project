@@ -3,15 +3,15 @@
 
 所使用的技术：
 
-ribbitmq:
+kafka:
 
 redis:
 
 mysql:
 
-nacos
+nacos:
 
-sentinel
+sentinel:
 
 grpc:
 
