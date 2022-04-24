@@ -1,12 +1,51 @@
 package model
 
 import (
+	"errors"
 	"gorm.io/gorm"
 	"math/rand"
 	"project/main/module/user/entity"
 	"project/main/tool/dbTool"
+	myTime "project/main/tool/time"
 	"time"
 )
+
+func CreateRole(tx *gorm.DB, roleId int, UUID string, expireTime int32) (entity.UserRole, error) {
+	now := time.Now().Unix()
+	role := entity.UserRole{
+		UserId: UUID,
+		RoleId: roleId,
+		Expire: expireTime,
+		Ctime: myTime.Timestamp{
+			Val: &now,
+		},
+	}
+	err := tx.Create(&role).Error
+	return role, err
+}
+
+//func CreateRoles(roleId int, UUIDs []string, expireTime int32) (entity.UserRole, error){
+//
+//}
+
+func HasRole(UUID string, roleId int) (bool, error) {
+	var userRole *entity.User
+	now := time.Now().Unix()
+	err := dbTool.Mysql.
+		Where("UUID = ? and roleId = ? and status = ? and expire > ?",
+			UUID, roleId, "NORMAL", now).
+		Or("UUID = ? and roleId = ? and status = ? and expire = 0").
+		First(&userRole).
+		Error
+	if err == nil {
+		return false, nil
+	} else {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return true, nil
+		}
+		return false, err
+	}
+}
 
 func GetUserRoleByUUID(uuid string) ([]entity.UserRole, string) {
 	var value []entity.UserRole

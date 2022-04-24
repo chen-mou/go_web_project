@@ -1,6 +1,7 @@
 package dbTool
 
 import (
+	"github.com/chen-mou/gf/os/glog"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/plugin/dbresolver"
@@ -60,6 +61,7 @@ func init() {
 			Mysql.Use(dbresolver.Register(dbresolver.Config{
 				Replicas: []gorm.Dialector{mysql.Open(slave)},
 			}))
+			glog.Info("Mysql init success")
 		})
 	}
 	//initRole()

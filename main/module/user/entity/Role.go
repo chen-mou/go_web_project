@@ -25,6 +25,7 @@ type UserRole struct {
 	UserId string
 	RoleId int
 	Expire int32
+	Status string
 	Role   Role `gorm:"foreignKey:Id"`
 	Ctime  time.Timestamp
 	Mtime  time.Timestamp

@@ -6,4 +6,5 @@ server:
 logger:
     path: logs
     level: all
-os: windows
+
+name: czlcylx-01

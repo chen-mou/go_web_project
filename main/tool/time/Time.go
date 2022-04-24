@@ -2,6 +2,7 @@ package time
 
 import (
 	"database/sql/driver"
+	"strconv"
 	"time"
 )
 
@@ -28,4 +29,18 @@ func (time Timestamp) Value() (driver.Value, error) {
 		return nil, nil
 	}
 	return *time.Val, nil
+}
+
+func (time *Timestamp) MarshalJson() ([]byte, error) {
+	return []byte(strconv.FormatInt(*time.Val, 10)), nil
+}
+
+func (time *Timestamp) UnmarshalJson(val []byte) error {
+	str := string(val)
+	num, err := strconv.ParseInt(str, 10, 64)
+	if err != nil {
+		return err
+	}
+	time.Val = &num
+	return nil
 }

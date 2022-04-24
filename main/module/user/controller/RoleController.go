@@ -5,7 +5,7 @@ import (
 	"github.com/chen-mou/gf/frame/g"
 	"github.com/chen-mou/gf/net/ghttp"
 	"project/main/module/user"
-	"project/main/module/user/entity"
+	"project/main/module/user/server"
 	"project/main/tool"
 )
 
@@ -20,13 +20,19 @@ func roleRegister() {
 	user.RegisterByStruct(roleController)
 }
 
-func createDefine(r *ghttp.Request) {
-	res := tool.Result{}
-	r.Response.WriteJsonExit(res.Success("test", nil))
-}
+func createRole(r *ghttp.Request) {}
 
-func createBaseManager(r *ghttp.Request) {
+func createDefine(r *ghttp.Request) {
 	jsonByte := r.GetBody()
-	var users []entity.User
+	res := tool.Result{}
+	var users []string
 	json.Unmarshal(jsonByte, &users)
+	roles, err := server.CreateBaseManager(users, nil, 6)
+	if err != nil {
+		r.Response.WriteJsonExit(res.Fail(500, err.Error()))
+		return
+	}
+	r.Response.WriteJsonExit(res.Success("创建成功", &map[string]any{
+		"data": roles,
+	}))
 }

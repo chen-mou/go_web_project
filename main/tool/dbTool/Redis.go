@@ -42,6 +42,7 @@ func do(handler func(), ctx context.Context) {
 func init() {
 	RedisClient = redis.NewClusterClient(&redis.ClusterOptions{
 		Addrs:    redisPath,
+		PoolSize: 40,
 		Password: "1007324849redis...",
 	})
 	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
