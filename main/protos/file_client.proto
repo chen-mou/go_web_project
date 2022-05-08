@@ -1,0 +1,17 @@
+service Login {
+  rpc Login(User) returns (JSON) {
+
+  }
+}
+
+message User {
+  required string machineName = 1;
+  required string filename = 2;
+  required string type = 3;
+  required string auth = 4;
+  required string fileId = 5;
+}
+
+message JSON {
+
+}

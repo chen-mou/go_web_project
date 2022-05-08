@@ -25,3 +25,15 @@ type Commodity struct {
 	ctime       time.Timestamp
 	mtime       time.Timestamp
 }
+
+type Goods struct {
+	Id          int
+	ShopId      string
+	GoodsId     string
+	ClassId     string
+	Name        string
+	Description string
+	Price       float64
+	Ctime       time.Timestamp
+	Mtime       time.Timestamp
+}

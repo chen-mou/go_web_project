@@ -9,6 +9,7 @@ import (
 	"project/main/module/user/middware"
 	"project/main/tool"
 	_ "project/main/tool/dbTool"
+	"project/main/tool/mq"
 )
 
 var configMap = map[string]string{
@@ -39,6 +40,10 @@ func main() {
 		}()
 		r.Middleware.Next()
 	})
+	//mq.Register("test", nil)
+	//mq.Ch <- true
+
 	register()
+	mq.Send("test", "message")
 	s.Run()
 }

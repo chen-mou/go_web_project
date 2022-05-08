@@ -4,7 +4,7 @@ import "project/main/tool/time"
 
 type File struct {
 	Id          int
-	FileId      string
+	FileId      string `NtoNull:"文件Id不能为空"`
 	Uploader    string
 	MachineName string
 	Filename    string `NotNull:"文件名不能为空"`

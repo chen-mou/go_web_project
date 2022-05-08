@@ -139,6 +139,14 @@ func Set(key string, value interface{}, expireAt time.Duration) {
 	RedisClient.Set(ctx, key, str, expireAt)
 }
 
+// HotSet 添加一个热键 热键设置时key中不应该包括有效值
+//func HotSet(key string, value interface{}, expireAt time.Duration) {
+//	ctx, cancl := context.WithTimeout(context.Background(), 5*time.Second)
+//
+//}
+
+func HotGet(key string, value interface{}) {}
+
 func GetThreadID() string {
 	goroutineID := http2.CurGoroutineID()
 	pid := os.Getpid()

@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/alibaba/sentinel-golang v1.0.4
 	github.com/chen-mou/gf v1.16.9
+	github.com/confluentinc/confluent-kafka-go v1.8.2
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/go-redis/redis/v8 v8.11.4
 	golang.org/x/net v0.0.0-20210520170846-37e1c6afe023
