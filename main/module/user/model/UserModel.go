@@ -3,7 +3,6 @@ package model
 import (
 	"encoding/json"
 	"fmt"
-	"golang.org/x/sys/windows"
 	"project/main/module/user/entity"
 	"project/main/tool"
 	"project/main/tool/dbTool"
@@ -39,8 +38,7 @@ func Create(users []entity.User, roleId int) ([]entity.User, error) {
 		user.Salt = encryption.MD5Salt(user.Name, strconv.FormatInt(unix, 10))
 		user.Password = encryption.MD5SaltCount(user.Password, user.Salt, 5)
 		user.UUID = encryption.MD5Salt(user.Name,
-			tool.Get("name")+strconv.FormatInt(unix, 10)+
-				strconv.FormatInt(int64(windows.GetCurrentThreadId()), 10))
+			tool.Get("name")+strconv.FormatInt(unix, 10))
 		user.Ctime = time.Timestamp{
 			Val: &unix,
 		}
