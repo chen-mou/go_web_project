@@ -24,7 +24,7 @@ jobs:
 
       - name: Build
         run: |
-          ls
+          set GOOS = linux
           go build  main/main.go
           pwd
 
