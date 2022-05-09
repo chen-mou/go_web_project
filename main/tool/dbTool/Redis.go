@@ -6,7 +6,6 @@ import (
 	"github.com/chen-mou/gf/os/glog"
 	"github.com/go-redis/redis/v8"
 	"golang.org/x/net/http2"
-	"golang.org/x/sys/windows"
 	"os"
 	"strconv"
 	"time"
@@ -150,8 +149,6 @@ func HotGet(key string, value interface{}) {}
 func GetThreadID() string {
 	goroutineID := http2.CurGoroutineID()
 	pid := os.Getpid()
-	threadId := windows.GetCurrentThreadId()
 	return strconv.Itoa(pid) + ":" +
-		strconv.FormatUint(uint64(threadId), 10) + ":" +
 		strconv.FormatUint(goroutineID, 10)
 }
