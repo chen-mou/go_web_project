@@ -25,7 +25,7 @@ jobs:
       - name: Build
         run: |
           ls
-          go build -v .
+          go build  main/main.go
           pwd
 
       - name: Archive production artifacts
