@@ -9,7 +9,6 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/go-redis/redis/v8 v8.11.4
 	golang.org/x/net v0.0.0-20210520170846-37e1c6afe023
-	golang.org/x/sys v0.0.0-20210423082822-04245dca01da
 	gorm.io/driver/mysql v1.0.3
 	gorm.io/gorm v1.20.11
 	gorm.io/plugin/dbresolver v1.1.0
@@ -49,8 +48,13 @@ require (
 	github.com/tklauser/numcpus v0.2.2 // indirect
 	go.opentelemetry.io/otel v1.0.0-RC2 // indirect
 	go.opentelemetry.io/otel/trace v1.0.0-RC2 // indirect
+	golang.org/x/sys v0.0.0-20210423082822-04245dca01da // indirect
 	golang.org/x/text v0.3.6 // indirect
 	google.golang.org/protobuf v1.26.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
+)
+
+replace (
+	golang.org/x/net => github.com/chen-mou/net v1.0.0
 )
