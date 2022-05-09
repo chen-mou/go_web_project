@@ -23,15 +23,16 @@ jobs:
           fi
 
       - name: Build
+        env:
+          GOOS: linux
         run: |
-          set GOOS = linux
           go build  main/main.go
           pwd
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v1
         with:
-          name: drone_test
+          name: go_web_project
           path: /home/runner/work/go_web_project/go_web_project
 #  dockerfile:
 #    name
