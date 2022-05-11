@@ -42,10 +42,10 @@ jobs:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v1
       - name: Get Artifacts
-          uses: actions/download-artifact@master
-          with:
-            name: go_web_project
-            path: server
+        uses: actions/download-artifact@master
+        with:
+          name: go_web_project
+          path: server
       - name: build Image
         run: |
           docker login --username=${{secrets.ALI_DOCKER_HUB_USN}} --password=${{secrets.ALI_DOCKER_HUB_PWD}}
