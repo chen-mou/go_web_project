@@ -1,3 +1,3 @@
 from centos:centos7
-copy ../server server
+copy server server
 cmd ./server
