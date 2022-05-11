@@ -50,12 +50,12 @@ jobs:
         with:
           name: go_web_project
           path: server
-      - run: ls
       - name: Get Artifacts
         uses: actions/download-artifact@master
         with:
           name: Dockerfile
           path: Dockerfile
+      - run: ls
       - name: build Image
         run: |
           docker login --username=${{secrets.ALI_DOCKER_HUB_USN}} --password=${{secrets.ALI_DOCKER_HUB_PWD}}
