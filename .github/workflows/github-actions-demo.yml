@@ -52,5 +52,5 @@ jobs:
         run: |
           docker login --username=${{secrets.ALI_DOCKER_HUB_USN}} --password=${{secrets.ALI_DOCKER_HUB_PWD}}
           ls
-          docker build -t killerqueen07/server /home/runner/work/go_web_project/go_web_project/.github/dockerfile
+          docker build -t killerqueen07/server main/dockerfile
           docker push killerqueen07/server
