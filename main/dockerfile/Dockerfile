@@ -1,3 +1,3 @@
 from centos:centos7
-add server
+copy server server
 cmd ./server
