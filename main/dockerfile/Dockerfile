@@ -1,4 +1,3 @@
 from centos:centos7
-copy server server
-run ls
+copy server ../server
 cmd ./server
