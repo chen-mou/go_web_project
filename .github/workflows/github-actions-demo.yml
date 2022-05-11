@@ -33,22 +33,31 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: go_web_project
-          path: /home/runner/work/go_web_project/go_web_project
+          path: /home/runner/work/go_web_project/go_web_project/server
+
+      - name: Upload dockerFile
+        uses: actions/upload-artifact@v1
+        with:
+          name: Dockerfile
+          path: /home/runner/work/go_web_project/go_web_project/Dockerfile
   dockerfile:
     name: Build Image
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v1
       - name: Get Artifacts
         uses: actions/download-artifact@master
         with:
           name: go_web_project
           path: server
+      - name: Get Artifacts
+          uses: actions/download-artifact@master
+          with:
+            name: Dockerfile
+            path: Dockerfile
       - name: build Image
         run: |
           docker login --username=${{secrets.ALI_DOCKER_HUB_USN}} --password=${{secrets.ALI_DOCKER_HUB_PWD}}
           ls
-          docker build -t killerqueen07/server main/dockerfile
+          docker build -t killerqueen07/server .
           docker push killerqueen07/server
