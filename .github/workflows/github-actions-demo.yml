@@ -58,8 +58,5 @@ jobs:
       - name: build Image
         run: |
           docker login --username=${{secrets.ALI_DOCKER_HUB_USN}} --password=${{secrets.ALI_DOCKER_HUB_PWD}}
-          ls Dockerfile
-          ls server
-          head Dockerfile
-          docker build -t killerqueen07/server .
+          docker build -t killerqueen07/server Dockerfile
           docker push killerqueen07/server
