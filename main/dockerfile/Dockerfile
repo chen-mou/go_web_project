@@ -1,3 +1,3 @@
-form centos:centos7
-add /home/runner/work/go_web_project/go_web_project/server
+from centos:centos7
+add server
 cmd ./server
