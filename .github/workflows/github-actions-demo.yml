@@ -39,7 +39,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: Dockerfile
-          path: /home/runner/work/go_web_project/go_web_project/Dockerfile
+          path: /home/runner/work/go_web_project/go_web_project/main/Dockerfile
   dockerfile:
     name: Build Image
     runs-on: ubuntu-latest
