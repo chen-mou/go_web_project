@@ -63,7 +63,7 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: config
-          path: config
+          path: Dockerfile/config
       - name: build Image
         run: |
           mv server/server Dockerfile/server
