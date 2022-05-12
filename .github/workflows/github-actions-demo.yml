@@ -56,7 +56,7 @@ jobs:
           path: Dockerfile
       - name: build Image
         run: |
-          docker login --username=${{secrets.ALI_DOCKER_HUB_USN}} --password=${{secrets.ALI_DOCKER_HUB_PWD}}
           mv server/server Dockerfile/server
           docker build -t killerqueen07/server Dockerfile
+          docker login --username=${{secrets.ALI_DOCKER_HUB_USN}} --password=${{secrets.ALI_DOCKER_HUB_PWD}}
           docker push killerqueen07/server
