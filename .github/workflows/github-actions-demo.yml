@@ -58,5 +58,8 @@ jobs:
         run: |
           mv server/server Dockerfile/server
           docker build -t killerqueen07/server Dockerfile
+          docker images
           docker login --username=${{secrets.ALI_DOCKER_HUB_USN}} --password=${{secrets.ALI_DOCKER_HUB_PWD}}
+          echo ${{secrets.ALI_DOCKER_HUB_USN}}
+          echo ${{secrets.ALI_DOCKER_HUB_PWD}}
           docker push killerqueen07/server
