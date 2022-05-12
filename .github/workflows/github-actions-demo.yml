@@ -62,4 +62,5 @@ jobs:
           docker login --username=${{secrets.ALI_DOCKER_HUB_USN}} --password=${{secrets.ALI_DOCKER_HUB_PWD}}
           echo ${{secrets.ALI_DOCKER_HUB_USN}}
           echo ${{secrets.ALI_DOCKER_HUB_PWD}}
+          echo test
           docker push killerqueen07/server
