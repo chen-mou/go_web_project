@@ -67,7 +67,7 @@ jobs:
       - name: build Image
         run: |
           mv server/server Dockerfile/server
-          docker build -t killerqueen07/go_web_project Dockerfile
           ls
+          docker build -t killerqueen07/go_web_project Dockerfile
           docker login --username=killerqueen07 --password=CZL20010821
           docker push killerqueen07/go_web_project
