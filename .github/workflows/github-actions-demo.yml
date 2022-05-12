@@ -57,10 +57,6 @@ jobs:
       - name: build Image
         run: |
           mv server/server Dockerfile/server
-          docker build -t killerqueen07/server Dockerfile
-          docker images
+          docker build -t ${{secrets.ALI_DOCKER_HUB_USN}}/${{secrets.APP_NAME}} Dockerfile
           docker login --username=${{secrets.ALI_DOCKER_HUB_USN}} --password=${{secrets.ALI_DOCKER_HUB_PWD}}
-          echo ${{secrets.docker.ALI_DOCKER_HUB_USN}}
-          echo ${{secrets.docker.ALI_DOCKER_HUB_PWD}}
-          echo test
-          docker push killerqueen07/server
+          docker push ${{secrets.ALI_DOCKER_HUB_USN}}/${{secrets.APP_NAME}}
