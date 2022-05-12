@@ -1,6 +1,6 @@
 server:
     Address: :15030
-    ServerRoot: /public
+    ServerRoot: ./public
     IndexFiles: ["index.html"]
     logPath: gflogs
 logger:
