@@ -39,6 +39,11 @@ jobs:
         with:
           name: Dockerfile
           path: /home/runner/work/go_web_project/go_web_project/main/Dockerfile
+      - name: Upload config
+        uses: actions/upload-artifact@v1
+        with:
+          name: config
+          path: /home/runner/work/go_web_project/go_web_project/main/config
   dockerfile:
     name: Build Image
     runs-on: ubuntu-latest
@@ -54,6 +59,11 @@ jobs:
         with:
           name: Dockerfile
           path: Dockerfile
+      - name: Get Artifacts
+        uses: actions/download-artifact@master
+        with:
+          name: config
+          path: .
       - name: build Image
         run: |
           mv server/server Dockerfile/server

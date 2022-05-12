@@ -1,3 +1,4 @@
 from centos:centos7
 copy server server
-cmd chmod 700 server && ./server
+copy config ./config
+cmd chmod 700 server && ./server --env=dev
