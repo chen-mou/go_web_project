@@ -57,6 +57,6 @@ jobs:
       - name: build Image
         run: |
           mv server/server Dockerfile/server
-          docker build -t ${{secrets.ALI_DOCKER_HUB_USN}}/${{secrets.APP_NAME}} Dockerfile
-          docker login --username=${{secrets.ALI_DOCKER_HUB_USN}} --password=${{secrets.ALI_DOCKER_HUB_PWD}}
-          docker push ${{secrets.ALI_DOCKER_HUB_USN}}/${{secrets.APP_NAME}}
+          docker build -t ${{ secrets.ALI_DOCKER_HUB_USN }}/${{ secrets.APP_NAME }} Dockerfile
+          docker login --username=${{ secrets.ALI_DOCKER_HUB_USN }} --password=${{ secrets.ALI_DOCKER_HUB_PWD }}
+          docker push ${{ secrets.ALI_DOCKER_HUB_USN }}/${{ secrets.APP_NAME }}
