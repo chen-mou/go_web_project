@@ -4,11 +4,14 @@ import (
 	"flag"
 	"github.com/chen-mou/gf/frame/g"
 	"github.com/chen-mou/gf/net/ghttp"
+	"google.golang.org/grpc/reflection"
+	"net"
 	fileController "project/main/module/file/controller"
 	userController "project/main/module/user/controller"
 	"project/main/module/user/middware"
 	"project/main/tool"
 	_ "project/main/tool/dbTool"
+	"project/main/tool/rpg/server"
 )
 
 var configMap = map[string]string{
@@ -24,6 +27,7 @@ func register() {
 
 func main() {
 	var env string
+	reflection.Register(server.S)
 	flag.StringVar(&env, "env", "", "dev")
 	flag.Parse()
 	g.Config().SetFileName(configMap[env])
@@ -41,8 +45,12 @@ func main() {
 	})
 	//mq.Register("test", nil)
 	//mq.Ch <- true
-
 	register()
+	lis, err := net.Listen("tcp", ":14000")
+	if err != nil {
+		panic(err)
+	}
+	go server.S.Serve(lis)
 	//mq.Send("test", "message")
 	s.Run()
 }

@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option go_package="./;file";
+
+package protos;
+
+import "google/protobuf/any.proto";
+
+service FileServer {
+  rpc Upload(File) returns (JSON) {
+
+  }
+}
+
+message File {
+  string machineName = 1;
+  string filename = 2;
+  string type = 3;
+  string auth = 4;
+  string fileId = 5;
+}
+
+message JSON {
+   int32 code = 1;
+   string msg = 2;
+   repeated google.protobuf.Any data = 3;
+}

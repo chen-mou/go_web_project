@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option go_package = "/;output";
+
+package protos;
+
+import "main/protos/file_client.proto";
+
+service UserServer {
+  rpc Login(User) returns (protos.JSON){
+
+  }
+  rpc Register(User) returns (protos.JSON){
+
+  }
+}
+
+message User {
+  string username = 1;
+  string password = 2;
+}
